@@ -6,36 +6,7 @@ void preloadTable (int matrix[10][10]);
 void moveFirstPlayerFile (int matrix[10][10]);
 void moveSecondPlayerFile (int matrix[10][10]);
 void moveFiles (int matrix[10][10] ,bool isFirstPlayerTurn);
-
-// TODO mover esto abajo 
-bool validateIfIsValidSelection(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]){
-	// Validaciones generales
-	if(i < 0 || i > 9) {
-		cout << "Posicion \" X \" fuera del rango [0-9]\n";
-		return false;
-		}
-	if(j < 0 || j > 9) {
-		cout << "Posicion \" Y \" fuera del rango [0-9]\n";
-		return false;
-		}
-	if((i+j) % 2 == 0) {
-		cout << "Esta es una casilla vacia, no puedes seleccionarla \n";
-		return false;
-		}
-
-	//Validaciones por jugador
-	if(isFirstPlayerTurn && !matrix[i][j] == 1){
-			cout << "No tienes una ficha en esa posicion\n";
-			return false;
-	}else{
-		if(!matrix[i][j] == 2) {
-			cout << "No tienes una ficha en esa posicion\n";
-			return false;
-		}
-	}
-
-	return true;
-}
+bool validateIfIsValidSelection(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]);
 
 int main() {
 	bool isFirstPlayerTurn = true;
@@ -109,17 +80,20 @@ void moveFirstPlayerFile (int matrix[10][10]){
 	do{
 	cout << "Que ficha quieres mover? ingrese posicion x, y \n";
 	cin >> i >> j;
-	isValidSelection = validateIfIsValidSelection(true, i,j, matrix);
+	isValidSelection = validateIfIsValidSelection(true, j , i, matrix);
 	} while (!isValidSelection);
 	
 	char direction;
 	matrix[j][i] = 0;
 	cout << "Movera a la derecha <D> o a la Izquierda <I>? \n";
 	cin >> direction;
-	if(direction == 'd' || 'D')
+	if(direction == 'd' || direction == 'D'){
 		matrix[j + 1][i + 1] = 1;
-	else if(direction == 'i' || 'I')
+		return;
+	}else{
 		matrix[j + 1][i - 1] = 1;
+		return;
+	}
 
 }
 
@@ -136,11 +110,52 @@ void moveSecondPlayerFile (int matrix[10][10]){
 	matrix[j][i] = 0;
 	cout << "Movera a la derecha <D> o a la Izquierda <I>? \n";
 	cin >> direction;
-	if(direction == 'd' || 'D')
+	if(direction == 'd' || direction == 'D'){
 		matrix[j - 1][i + 1] = 2;
-	else if(direction == 'i' || 'I')
+		return;
+	}
+	else if(direction == 'i' || direction == 'I'){
 		matrix[j - 1][i - 1] = 2;
+		return;
+	}
 
 }
 
+bool validateIfIsValidSelection(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]){
+	// Validaciones generales
+	if(i < 0 || i > 9) {
+		cout << "Posicion \" X \" fuera del rango [0-9]\n";
+		return false;
+		}
+	if(j < 0 || j > 9) {
+		cout << "Posicion \" Y \" fuera del rango [0-9]\n";
+		return false;
+		}
+	if((i+j) % 2 == 0) {
+		cout << "Esta es una casilla vacia, no puedes seleccionarla \n";
+		return false;
+		}
 
+	//Validaciones por jugador
+	if(isFirstPlayerTurn && !matrix[i][j] == 1){
+			cout << "No tienes una ficha en esa posicion\n";
+			return false;
+	}else if(!matrix[i][j] == 2){
+			cout << "No tienes una ficha en esa posicion\n";
+			return false;
+	}
+
+	//Validacion de posible movimiento
+	if(isFirstPlayerTurn){
+		if(matrix[j + 1][i + 1] == 1 && matrix[j + 1][i - 1] == 1){
+			cout << "Esta ficha no puede moverse\n";
+			return false;
+		}
+	}else if(!isFirstPlayerTurn){
+		if(matrix[j - 1][i + 1] == 2 && matrix[j - 1][i - 1] == 2){
+			cout << "Esta ficha no puede moverse\n";
+			return false;
+		}
+	}
+	return true;
+}
