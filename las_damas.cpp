@@ -126,15 +126,17 @@ bool validateIfIsValidSelection(bool isFirstPlayerTurn, int i, int j, int matrix
 	if(i < 0 || i > 9) {
 		cout << "Posicion \" X \" fuera del rango [0-9]\n";
 		return false;
-		}
+	}
+
 	if(j < 0 || j > 9) {
 		cout << "Posicion \" Y \" fuera del rango [0-9]\n";
 		return false;
-		}
+	}
+
 	if((i+j) % 2 == 0) {
 		cout << "Esta es una casilla vacia, no puedes seleccionarla \n";
 		return false;
-		}
+	}
 
 	//Validaciones por jugador
 
@@ -148,16 +150,13 @@ bool validateIfIsValidSelection(bool isFirstPlayerTurn, int i, int j, int matrix
 	
 
 	//Validacion de posible movimiento
-	if(isFirstPlayerTurn){
-		if(matrix[j + 1][i + 1] == 1 && matrix[j + 1][i - 1] == 1){
-			cout << "Esta ficha no puede moverse\n";
-			return false;
-		}
-	}else if(!isFirstPlayerTurn){
-		if(matrix[j - 1][i + 1] == 2 && matrix[j - 1][i - 1] == 2){
-			cout << "Esta ficha no puede moverse\n";
-			return false;
-		}
+	if(isFirstPlayerTurn && (matrix[i + 1][j + 1] == 1|| matrix[i + 1][j - 1] == 1)){
+		cout << "Esa ficha no puede moverse\n";
+		return false;
+	}
+	if(!isFirstPlayerTurn && (matrix[i - 1][j + 1] == 2|| matrix[i - 1][j - 1] == 2)){
+		cout << "Esa ficha no puede moverse\n";
+		return false;
 	}
 	return true;
 }
