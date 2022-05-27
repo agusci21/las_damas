@@ -27,9 +27,14 @@ void printTable (int matrix[10][10], bool isFirstPlayerTurn){
 	" | Y +-------------------------------+\n";
 
 	for(int i = 0; i < 10; i++){
-		for(int j = 0; j < 10; j++){
+		for(int j = 0; j <= 10; j++){
 			if( j == 0)
 			cout << " | " << i << " | ";
+			if(j == 10){
+			cout << "| ";
+			continue;
+			}
+
 			if((i + j) % 2 == 0)
 				cout << " x " ;
 			else
@@ -37,6 +42,7 @@ void printTable (int matrix[10][10], bool isFirstPlayerTurn){
 		}	
 		cout << endl;
 	}
+	cout << " +---+-------------------------------+\n";
 }
 
 void preloadTable (int matrix[10][10]){
