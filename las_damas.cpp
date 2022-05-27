@@ -151,16 +151,12 @@ bool validateIfIsValidSelection(bool isFirstPlayerTurn, int i, int j, int matrix
 	
 
 	//Validacion de posible movimiento
-	determinateMovementAcount(isFirstPlayerTurn, i, j, matrix);
-	/*
-	if(isFirstPlayerTurn && (matrix[i + 1][j + 1] == 1|| matrix[i + 1][j - 1] == 1)){
-		cout << "Esa ficha no puede moverse\n";
+	if(!determinateMovementAcount(isFirstPlayerTurn, i, j, matrix)) {
+		cout << "Esta ficha no tiene movimientos posibles \n";
 		return false;
 	}
-	if(!isFirstPlayerTurn && (matrix[i - 1][j + 1] == 2|| matrix[i - 1][j - 1] == 2)){
-		cout << "Esa ficha no puede moverse\n";
-		return false;
-	}*/
+	
+	return true;
 }
 
 int determinateMovementAcount(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]){
@@ -182,8 +178,5 @@ int determinateMovementAcount(bool isFirstPlayerTurn, int i, int j, int matrix[1
 		if(matrix[i - 1][j - 1] == 2)
 			posibleMovementAcount--;
 	}
-
-	cout << endl <<"POSIBLES MOVIMIENTOS: " <<posibleMovementAcount << endl;
-	cout << "X: " << j << "Y: " << i;
 	return posibleMovementAcount;
 }
