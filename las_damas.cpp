@@ -10,16 +10,30 @@ void moveFiles (int matrix[10][10] ,bool isFirstPlayerTurn);
 // TODO mover esto abajo 
 bool validateIfIsValidSelection(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]){
 	// Validaciones generales
-	if(i < 0 || i > 9) return false;
-	if(j < 0 || j > 9) return false;
-	if((i+j) % 2 == 0)return false;
+	if(i < 0 || i > 9) {
+		cout << "Posicion \" X \" fuera del rango [0-9]\n";
+		return false;
+		}
+	if(j < 0 || j > 9) {
+		cout << "Posicion \" Y \" fuera del rango [0-9]\n";
+		return false;
+		}
+	if((i+j) % 2 == 0) {
+		cout << "Esta es una casilla vacia, no puedes seleccionarla \n";
+		return false;
+		}
 
 	//Validaciones por jugador
-	if(isFirstPlayerTurn){
-		if(matrix[i][j] != 1)return false;
+	if(isFirstPlayerTurn && !matrix[i][j] == 1){
+			cout << "No tienes una ficha en esa posicion\n";
+			return false;
 	}else{
-		if(matrix[i][j] != 2)return false;
+		if(!matrix[i][j] == 2) {
+			cout << "No tienes una ficha en esa posicion\n";
+			return false;
+		}
 	}
+
 	return true;
 }
 
@@ -92,8 +106,7 @@ void moveFirstPlayerFile (int matrix[10][10]){
 	// i = y; j = x
 	bool isValidSelection = false;
 	int i,j;
-	do
-	{
+	do{
 	cout << "Que ficha quieres mover? ingrese posicion x, y \n";
 	cin >> i >> j;
 	isValidSelection = validateIfIsValidSelection(true, i,j, matrix);
@@ -113,9 +126,13 @@ void moveFirstPlayerFile (int matrix[10][10]){
 void moveSecondPlayerFile (int matrix[10][10]){
 	// i = y; j = x
 	int i,j;
-	char direction;
+	bool isValidSelection = false;
+	do{
 	cout << "Que ficha quieres mover? ingrese posicion x, y \n";
 	cin >> i >> j;
+	isValidSelection = validateIfIsValidSelection(false, i,j, matrix);
+	} while (!isValidSelection);
+	char direction;
 	matrix[j][i] = 0;
 	cout << "Movera a la derecha <D> o a la Izquierda <I>? \n";
 	cin >> direction;
