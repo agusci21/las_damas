@@ -80,18 +80,23 @@ void moveFirstPlayerFile (int matrix[10][10]){
 	// i = y; j = x
 	bool isValidSelection = false;
 	int i,j;
+	char direction;
 	do{
 	cout << "Que ficha quieres mover? ingrese posicion x, y \n";
 	cin >> i >> j;
 	isValidSelection = validateIfIsValidSelection(true, j , i, matrix);
+	} while (!isValidSelection);
 	bool canMoveRight = determinateIfBeAbleToMoveRight(true, j , i, matrix);
 	bool canMoveLeft = determinateIfBeAbleToMoveLeft(true, j , i, matrix);
-	} while (!isValidSelection);
-	
-	char direction;
+	if(canMoveRight && canMoveLeft){
+		cout << "Movera a la derecha <D> o a la Izquierda <I>? \n";
+		cin >> direction;
+	}else if(canMoveRight && !canMoveLeft){
+		direction = 'D';
+	}else if(!canMoveRight && canMoveLeft){
+		direction = 'I';
+	}
 	matrix[j][i] = 0;
-	cout << "Movera a la derecha <D> o a la Izquierda <I>? \n";
-	cin >> direction;
 	if(direction == 'd' || direction == 'D'){
 		matrix[j + 1][i + 1] = 1;
 		return;
