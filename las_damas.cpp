@@ -66,6 +66,7 @@ void preloadTable (int matrix[10][10]){
 }
 
 void moveFile (int matrix[10][10]){
+	// i = y; j = x
 	int i,j;
 	char direction;
 	cout << "Que ficha quieres mover? ingrese posicion x, y \n";
@@ -73,11 +74,11 @@ void moveFile (int matrix[10][10]){
 	matrix[j][i] = 0;
 	cout << "Movera a la derecha <D> o a la Izquierda <I>? \n";
 	cin >> direction;
-	if(direction == 'D'){
-		matrix[i + 1][j + 1] = 1;
-	}else if(direction == 'I'){
-		matrix[i - 1][j + 1] = 1;
-	  }
-	}
+	if(direction == 'd' || 'D')
+		matrix[j + 1][i + 1] = 1;
+	else if(direction == 'i' || 'I')
+		matrix[j + 1][i - 1] = 1;
+
+}
 
 
