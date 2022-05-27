@@ -105,18 +105,24 @@ void moveFirstPlayerFile (int matrix[10][10]){
 void moveSecondPlayerFile (int matrix[10][10]){
 	// i = y; j = x
 	int i,j;
+	char direction;
 	bool isValidSelection = false;
 	do{
 	cout << "Que ficha quieres mover? ingrese posicion x, y \n";
 	cin >> i >> j;
 	isValidSelection = validateIfIsValidSelection(false, j,i, matrix);
+	} while (!isValidSelection);
 	bool canMoveRight = determinateIfBeAbleToMoveRight(false, j , i, matrix);
 	bool canMoveleft = determinateIfBeAbleToMoveLeft(false, j , i, matrix);
-	} while (!isValidSelection);
-	char direction;
+	if(canMoveRight && canMoveleft){
+		cout << "Movera a la derecha <D> o a la Izquierda <I>? \n";
+		cin >> direction;
+	}else if(canMoveRight && !canMoveleft){
+		direction = 'D';
+	}else if(!canMoveRight && canMoveleft){
+		direction = 'I';
+	}
 	matrix[j][i] = 0;
-	cout << "Movera a la derecha <D> o a la Izquierda <I>? \n";
-	cin >> direction;
 	if(direction == 'd' || direction == 'D'){
 		matrix[j - 1][i + 1] = 2;
 		return;
@@ -125,7 +131,6 @@ void moveSecondPlayerFile (int matrix[10][10]){
 		matrix[j - 1][i - 1] = 2;
 		return;
 	}
-
 }
 
 bool validateIfIsValidSelection(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]){
