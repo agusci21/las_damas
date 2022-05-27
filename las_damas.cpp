@@ -7,6 +7,7 @@ void moveFirstPlayerFile (int matrix[10][10]);
 void moveSecondPlayerFile (int matrix[10][10]);
 void moveFiles (int matrix[10][10] ,bool isFirstPlayerTurn);
 bool validateIfIsValidSelection(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]);
+int determinateMovementAcount(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]);
 
 int main() {
 	bool isFirstPlayerTurn = true;
@@ -139,7 +140,7 @@ bool validateIfIsValidSelection(bool isFirstPlayerTurn, int i, int j, int matrix
 	}
 
 	//Validaciones por jugador
-
+	
 	if(isFirstPlayerTurn && matrix[i][j] != 1){
 		cout << "Esa ficha no te pertenece\n"; 
 		return false;
@@ -150,6 +151,8 @@ bool validateIfIsValidSelection(bool isFirstPlayerTurn, int i, int j, int matrix
 	
 
 	//Validacion de posible movimiento
+	determinateMovementAcount(isFirstPlayerTurn, i, j, matrix);
+	/*
 	if(isFirstPlayerTurn && (matrix[i + 1][j + 1] == 1|| matrix[i + 1][j - 1] == 1)){
 		cout << "Esa ficha no puede moverse\n";
 		return false;
@@ -157,6 +160,23 @@ bool validateIfIsValidSelection(bool isFirstPlayerTurn, int i, int j, int matrix
 	if(!isFirstPlayerTurn && (matrix[i - 1][j + 1] == 2|| matrix[i - 1][j - 1] == 2)){
 		cout << "Esa ficha no puede moverse\n";
 		return false;
+	}*/
+}
+
+int determinateMovementAcount(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]){
+	int posibleMovementAcount = 2;
+	if(j == 0 || j == 9){
+		posibleMovementAcount--;
 	}
-	return true;
+
+	if(isFirstPlayerTurn){
+		if(matrix[i + 1][j + 1] == 1)
+			posibleMovementAcount--;
+		if(matrix[i + 1][j - 1] == 1)
+			posibleMovementAcount--;
+	}
+
+	cout << endl <<"POSIBLES MOVIMIENTOS: " <<posibleMovementAcount << endl;
+	cout << "X: " << j << "Y: " << i;
+	return posibleMovementAcount;
 }
