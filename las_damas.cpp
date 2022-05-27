@@ -111,6 +111,7 @@ void moveSecondPlayerFile (int matrix[10][10]){
 	cin >> i >> j;
 	isValidSelection = validateIfIsValidSelection(false, j,i, matrix);
 	bool canMoveRight = determinateIfBeAbleToMoveRight(false, j , i, matrix);
+	bool canMoveleft = determinateIfBeAbleToMoveLeft(false, j , i, matrix);
 	} while (!isValidSelection);
 	char direction;
 	matrix[j][i] = 0;
@@ -183,34 +184,25 @@ int determinateMovementAcount(bool isFirstPlayerTurn, int i, int j, int matrix[1
 		if(matrix[i - 1][j - 1] == 2)
 			posibleMovementAcount--;
 	}
-	cout << "CANTIDAD POSIBLE DE MOVIMIENTOS: " << posibleMovementAcount;
 	return posibleMovementAcount;
 }
 
 bool determinateIfBeAbleToMoveRight(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]){
 	if(isFirstPlayerTurn && matrix[i + 1][j + 1] != 1 && j != 9){
-		cout << "SE PUEDE MOVER A LA DERECHA";
 		return true;
 	}
 	if(!isFirstPlayerTurn && matrix[i - 1][j + 1] != 2 && j != 9){
-		cout << "SE PUEDE MOVER A LA DERECHA";
 		return true;
 	}
-
-	cout << "NO SE PUEDE MOVER A LA DERECHA";
 	return false;
 }
 
 bool determinateIfBeAbleToMoveLeft(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]){
 	if(isFirstPlayerTurn && matrix[i + 1][j - 1] != 1 && j != 0){
-		cout << " SE PUEDE MOVER A LA IZQUIERDA ";
 		return true;
 	}
 	if(!isFirstPlayerTurn && matrix[i - 1][j - 1] != 2 && j != 0){
-		cout << " SE PUEDE MOVER A LA IZQUIERDA ";
 		return true;
 	}
-
-	cout << " NO SE PUEDE MOVER A LA IZQUIERDA ";
 	return false;
 }
