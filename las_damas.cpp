@@ -3,7 +3,9 @@ using namespace std;
 
 void printTable (int matrix[10][10],bool isFirstPlayerTurn);
 void preloadTable (int matrix[10][10]);
-void moveFile (int matrix[10][10]);
+void moveFirstPlayerFile (int matrix[10][10]);
+void moveSecondPlayerFile (int matrix[10][10]);
+void moveFiles (int matrix[10][10] ,bool isFirstPlayerTurn);
 
 int main() {
 	bool isFirstPlayerTurn = true;
@@ -12,7 +14,7 @@ int main() {
 	preloadTable(table);
 	do{
 	printTable(table, isFirstPlayerTurn);
-	moveFile(table);
+	moveFiles(table, isFirstPlayerTurn);
 	isFirstPlayerTurn = !isFirstPlayerTurn;
 	}while(!isWinner);
 	return 0;
@@ -65,7 +67,12 @@ void preloadTable (int matrix[10][10]){
 	
 }
 
-void moveFile (int matrix[10][10]){
+void moveFiles (int matrix[10][10] ,bool isFirstPlayerTurn){
+	isFirstPlayerTurn ? moveFirstPlayerFile(matrix) : moveSecondPlayerFile(matrix);
+}
+
+
+void moveFirstPlayerFile (int matrix[10][10]){
 	// i = y; j = x
 	int i,j;
 	char direction;
@@ -78,6 +85,22 @@ void moveFile (int matrix[10][10]){
 		matrix[j + 1][i + 1] = 1;
 	else if(direction == 'i' || 'I')
 		matrix[j + 1][i - 1] = 1;
+
+}
+
+void moveSecondPlayerFile (int matrix[10][10]){
+	// i = y; j = x
+	int i,j;
+	char direction;
+	cout << "Que ficha quieres mover? ingrese posicion x, y \n";
+	cin >> i >> j;
+	matrix[j][i] = 0;
+	cout << "Movera a la derecha <D> o a la Izquierda <I>? \n";
+	cin >> direction;
+	if(direction == 'd' || 'D')
+		matrix[j - 1][i + 1] = 2;
+	else if(direction == 'i' || 'I')
+		matrix[j - 1][i - 1] = 2;
 
 }
 
