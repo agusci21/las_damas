@@ -176,6 +176,13 @@ int determinateMovementAcount(bool isFirstPlayerTurn, int i, int j, int matrix[1
 			posibleMovementAcount--;
 	}
 
+	if(!isFirstPlayerTurn){
+		if(matrix[i - 1][j + 1] == 2)
+			posibleMovementAcount--;
+		if(matrix[i - 1][j - 1] == 2)
+			posibleMovementAcount--;
+	}
+
 	cout << endl <<"POSIBLES MOVIMIENTOS: " <<posibleMovementAcount << endl;
 	cout << "X: " << j << "Y: " << i;
 	return posibleMovementAcount;
