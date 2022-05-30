@@ -10,16 +10,26 @@ bool validateIfIsValidSelection(bool isFirstPlayerTurn, int i, int j, int matrix
 int determinateMovementAcount(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]);
 bool determinateIfBeAbleToMoveRight(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]);
 bool determinateIfBeAbleToMoveLeft(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]);
-
+int determinatePlayerPoints(int matrix[10][10], bool isFirstPlayerTurn ); 
+//TODO debo enviar las variables puntero y no debo sumar por fichas hasta el final del juego
 int main() {
+	int table[10][10] = {0};
+	int firstPlayerPoints, secondPlayerPoints = 0;
 	bool isFirstPlayerTurn = true;
 	bool isWinner = false;
-	int table[10][10] = {0};
 	preloadTable(table);
 	do{
 	printTable(table, isFirstPlayerTurn);
 	moveFiles(table, isFirstPlayerTurn);
+	if(isFirstPlayerTurn){
+		firstPlayerPoints = determinatePlayerPoints(table, isFirstPlayerTurn);
+		cout << "Jugador 1: " << firstPlayerPoints << endl;
+	}else{
+		secondPlayerPoints = determinatePlayerPoints(table, isFirstPlayerTurn);
+		cout << "Jugador 2: " << secondPlayerPoints << endl;
+	}
 	isFirstPlayerTurn = !isFirstPlayerTurn;
+	system("pause");
 	}while(!isWinner);
 	return 0;
 }
@@ -104,7 +114,7 @@ void moveFirstPlayerFile (int matrix[10][10]){
 		matrix[j + 1][i - 1] = 1;
 		return;
 	}
-
+	
 }
 
 void moveSecondPlayerFile (int matrix[10][10]){
@@ -215,4 +225,23 @@ bool determinateIfBeAbleToMoveLeft(bool isFirstPlayerTurn, int i, int j, int mat
 		return true;
 	}
 	return false;
+}
+
+int determinatePlayerPoints(int matrix[10][10], bool isFirstPlayerTurn ){
+	int playerNumber = isFirstPlayerTurn ? 1 : 2;
+	int points = 0;
+	for(int i = 0; i < 10; i++){
+		for(int j = 0; j < 10; j++){
+			if(matrix[9][j] == 1 && isFirstPlayerTurn){
+				matrix[9][j] = 0;
+				points += 5;
+			}else if(matrix[0][j] == 2 && !isFirstPlayerTurn){
+				matrix[9][j] = 0;
+				points += 5;
+			}
+			if(matrix[i][j] == playerNumber)
+			 points++;
+		}
+	}
+	return points;
 }
