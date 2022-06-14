@@ -13,6 +13,7 @@ int determinateMovementAcount(bool isFirstPlayerTurn, int i, int j, int matrix[1
 bool determinateIfBeAbleToMoveRight(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]);
 bool determinateIfBeAbleToMoveLeft(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]);
 int determinatePlayerPoints(int matrix[10][10], bool isFirstPlayerTurn);
+int translateInput();
 
 int main() {
 	int table[10][10] = {0};
@@ -100,7 +101,8 @@ void moveFirstPlayerFile (int matrix[10][10]){
 	char direction;
 	do{
 	cout << "Que ficha quieres mover? ingrese posicion x, y \n";
-	cin >> i >> j;
+	i = translateInput();
+	j = translateInput();
 	isValidSelection = validateIfIsValidSelection(true, j , i, matrix);
 	} while (!isValidSelection);
 	bool canMoveRight = determinateIfBeAbleToMoveRight(true, j , i, matrix);
@@ -131,7 +133,8 @@ void moveSecondPlayerFile (int matrix[10][10]){
 	bool isValidSelection = false;
 	do{
 	cout << "Que ficha quieres mover? ingrese posicion x, y \n";
-	cin >> i >> j;
+    i =  translateInput();
+    j =  translateInput();
 	isValidSelection = validateIfIsValidSelection(false, j,i, matrix);
 	} while (!isValidSelection);
 	bool canMoveRight = determinateIfBeAbleToMoveRight(false, j , i, matrix);
@@ -247,4 +250,11 @@ int determinatePlayerPoints(int matrix[10][10], bool isFirstPlayerTurn ){
 		}
 	}
 	return points;
+}
+
+int translateInput(){
+    int aux = getche();
+    cout << endl;
+    if(aux > 57 || aux < 48) cout << "Seleccione un numero por favor\n";
+    return aux - 48;
 }
