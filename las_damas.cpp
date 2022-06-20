@@ -1,5 +1,6 @@
 #include<iostream>
 #include<conio.h>
+#include<string>
 
 using namespace std;
 struct Player{
@@ -337,6 +338,8 @@ void runGame(string playersNames[10], string playersColors[10], int playersPoint
 }
 
 void createUser(string playersNames[10], string playersColors[10], int playersPoints[10], int playersAmount){
+	//char validSelections[7] = {'1', '2', '3', '4', '5', '6', '7'};
+	string validSelections = "1234567";
 	Player player;
 	string name;
 	string color = "COLOR 0x";
@@ -346,16 +349,24 @@ void createUser(string playersNames[10], string playersColors[10], int playersPo
 	cout << "Crea tu usuario\nIngrese su nombre\n";
 	cin >> name;
 	system("cls");
-	cout << "Ingrese su color de preferencia \n";
-	cout << 
-    "1 = Azul\n"
-    "2 = Verde\n"
-    "3 = Aguamarina\n"
-    "4 = Rojo \n"
-    "5 = Purpura\n"
-    "6 = Amarillo\n"
-    "7 = Blanco\n";
-	colorChar = getche();
+	do{
+		cout << "Ingrese su color de preferencia \n";
+		cout << 
+    	"1 = Azul\n"
+    	"2 = Verde\n"
+    	"3 = Aguamarina\n"
+    	"4 = Rojo \n"
+    	"5 = Purpura\n"
+    	"6 = Amarillo\n"
+    	"7 = Blanco\n";
+		colorChar = getche();
+		cout << endl;
+		if(validSelections.find(colorChar) == string::npos){
+			cout << "Por favor, selecione una opcion valida\n";
+			system("pause");
+			system("cls");
+		}
+	}while(validSelections.find(colorChar) == string::npos);
 	color[7] = colorChar;
 	player.name = name;
 	player.color = color;
