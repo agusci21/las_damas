@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void printTable (int matrix[10][10],bool isFirstPlayerTurn);
+void printTable (int matrix[10][10],bool isFirstPlayerTurn, string firstPlayerName, string secondPlayerName);
 void preloadTable (int matrix[10][10]);
 void moveFirstPlayerFile (int matrix[10][10]);
 void moveSecondPlayerFile (int matrix[10][10]);
@@ -24,7 +24,7 @@ struct Player{
 	string color;	
 };
 
-int getCurrentPlayers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount, int players[2]){
+void getCurrentPlayers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount, int players[2]){
 	int firstPlayer, secondPlayer;
 	system("cls");
 	cout << "Seleccione el Jugador 1: \n";
@@ -74,9 +74,9 @@ int main() {
 	return 0;
 }
 
-void printTable (int matrix[10][10], bool isFirstPlayerTurn){
+void printTable (int matrix[10][10], bool isFirstPlayerTurn, string firstPlayerName, string secondPlayerName){
 	system("cls");
-	isFirstPlayerTurn ? cout << "Turno del Jugador N 1 \n" : cout << "Turno del Jugador N 2\n";
+	isFirstPlayerTurn ? cout << "Turno de " << firstPlayerName << endl: cout << "Turno de " << secondPlayerName << endl;
 	cout << 
 	" +-----------------------------------+\n"
 	" | \\ X  0  1  2  3  4  5  6  7  8  9 |\n"
@@ -301,8 +301,18 @@ void runGame(string playersNames[10], string playersColors[10], int playersPoint
 		bool isWinner = false;
 		preloadTable(table);
 		getCurrentPlayers(playersNames, playersColors, playersPoints, playerAmounts, players);
+		Player firstPlayer, secondPlayer;
+		//Nombres de jugadores
+		firstPlayer.name = playersNames[players[0]];
+		secondPlayer.name = playersNames[players[1]];
+		//Puntaje de jugadores
+		firstPlayer.points = playersPoints[players[0]];
+		secondPlayer.points = playersPoints[players[1]];
+		//Color de jugadores
+		firstPlayer.color = playersColors[players[0]];
+		secondPlayer.color = playersColors[players[1]];
 		do{
-		printTable(table, isFirstPlayerTurn);
+		printTable(table, isFirstPlayerTurn, firstPlayer.name, secondPlayer.name);
 		moveFiles(table, isFirstPlayerTurn);
 		if(isFirstPlayerTurn){
     	    cout << firstPlayerPoints << endl;
