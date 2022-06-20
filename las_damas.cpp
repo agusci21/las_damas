@@ -2,8 +2,13 @@
 #include<conio.h>
 
 using namespace std;
+struct Player{
+	int points = 0;
+	string name;
+	string color;	
+};
 
-void printTable (int matrix[10][10],bool isFirstPlayerTurn, string firstPlayerName, string secondPlayerName);
+void printTable (int matrix[10][10], bool isFirstPlayerTurn, Player firstPlayer, Player secondPlayer);
 void preloadTable (int matrix[10][10]);
 void moveFirstPlayerFile (int matrix[10][10]);
 void moveSecondPlayerFile (int matrix[10][10]);
@@ -17,25 +22,37 @@ void runGame(string playersNames[10], string playersColors[10], int playersPoint
 void createUser(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmounts);
 int translateInput();
 void printUsers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount);
+void getCurrentPlayers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount, int players[2]);
+void changeColor(string color){
+	switch(color[7]){
+		case '1':
+			system("COLOR 01");
+			break;
 
-struct Player{
-	int points = 0;
-	string name;
-	string color;	
-};
+		case '2':
+			system("COLOR 02");
+			break;
 
-void getCurrentPlayers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount, int players[2]){
-	int firstPlayer, secondPlayer;
-	system("cls");
-	cout << "Seleccione el Jugador 1: \n";
-	printUsers(playersNames, playersColors, playersPoints, playerAmount);
-	firstPlayer = translateInput() - 1;
-	system("cls");
-	cout << "Seleccione el Jugador 2: \n";
-	printUsers(playersNames, playersColors, playersPoints, playerAmount);
-	secondPlayer = translateInput() - 1;
-	players[0] = firstPlayer;
-	players[1] = secondPlayer;
+		case '3':
+			system("COLOR 03");
+			break;
+
+		case '4':
+			system("COLOR 04");
+			break;
+
+		case '5':
+			system("COLOR 05");
+			break;
+
+		case '6':
+			system("COLOR 06");
+			break;
+
+		case '7':
+			system("COLOR 07");
+			break;
+	}
 }
 
 int main() {
@@ -74,9 +91,15 @@ int main() {
 	return 0;
 }
 
-void printTable (int matrix[10][10], bool isFirstPlayerTurn, string firstPlayerName, string secondPlayerName){
+void printTable (int matrix[10][10], bool isFirstPlayerTurn, Player firstPlayer, Player secondPlayer){
 	system("cls");
-	isFirstPlayerTurn ? cout << "Turno de " << firstPlayerName << endl: cout << "Turno de " << secondPlayerName << endl;
+	if(isFirstPlayerTurn){
+		cout << "Turno de " << firstPlayer.name << endl;
+		changeColor(firstPlayer.color);
+	}else {
+		cout << "Turno de " << secondPlayer.name << endl;
+		changeColor(secondPlayer.color);
+	}
 	cout << 
 	" +-----------------------------------+\n"
 	" | \\ X  0  1  2  3  4  5  6  7  8  9 |\n"
@@ -295,7 +318,7 @@ int translateInput(){
 
 void runGame(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmounts, int players[2]){
 		int table[10][10] = {0};
-		int firstPlayerPoints = 5;
+		int firstPlayerPoints = 0;
     	int secondPlayerPoints = 0;
 		bool isFirstPlayerTurn = true;
 		bool isWinner = false;
@@ -312,7 +335,7 @@ void runGame(string playersNames[10], string playersColors[10], int playersPoint
 		firstPlayer.color = playersColors[players[0]];
 		secondPlayer.color = playersColors[players[1]];
 		do{
-		printTable(table, isFirstPlayerTurn, firstPlayer.name, secondPlayer.name);
+		printTable(table, isFirstPlayerTurn, firstPlayer, secondPlayer);
 		moveFiles(table, isFirstPlayerTurn);
 		if(isFirstPlayerTurn){
     	    cout << firstPlayerPoints << endl;
@@ -378,4 +401,18 @@ void printUsers(string playersNames[10], string playersColors[10], int playersPo
 		cout << "Puntaje: " <<player.points << endl;
 		cout << "-----------------------\n";
 	}
+}
+
+void getCurrentPlayers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount, int players[2]){
+	int firstPlayer, secondPlayer;
+	system("cls");
+	cout << "Seleccione el Jugador 1: \n";
+	printUsers(playersNames, playersColors, playersPoints, playerAmount);
+	firstPlayer = translateInput() - 1;
+	system("cls");
+	cout << "Seleccione el Jugador 2: \n";
+	printUsers(playersNames, playersColors, playersPoints, playerAmount);
+	secondPlayer = translateInput() - 1;
+	players[0] = firstPlayer;
+	players[1] = secondPlayer;
 }
