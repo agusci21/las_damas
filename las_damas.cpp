@@ -295,7 +295,7 @@ int translateInput(){
 
 void runGame(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmounts, int players[2]){
 		int table[10][10] = {0};
-		int firstPlayerPoints = 0;
+		int firstPlayerPoints = 5;
     	int secondPlayerPoints = 0;
 		bool isFirstPlayerTurn = true;
 		bool isWinner = false;
@@ -326,8 +326,14 @@ void runGame(string playersNames[10], string playersColors[10], int playersPoint
 		isFirstPlayerTurn = !isFirstPlayerTurn;
     	system("pause");
 		}while(!isWinner);
-    	if(firstPlayerPoints >= 5) cout << "Felicitaciones jugador 1, has ganado\n";
-    	else cout << "Felicitaciones jugador 2, has ganado\n";
+    	if(firstPlayerPoints >= 5) {
+			cout << "Felicitaciones " << firstPlayer.name << " has ganado\n";
+			playersPoints[players[0]]++;
+		}
+    	else {
+			cout << "Felicitaciones " << secondPlayer.name << " has ganado\n";
+			playersPoints[players[1]]++;
+		}
 }
 
 void createUser(string playersNames[10], string playersColors[10], int playersPoints[10], int playersAmount){
