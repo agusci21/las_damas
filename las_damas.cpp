@@ -292,6 +292,10 @@ void runGame(string playersNames[10], string playersColors[10], int playersPoint
     	int secondPlayerPoints = 0;
 		bool isFirstPlayerTurn = true;
 		bool isWinner = false;
+		if(playerAmounts < 2){
+			cout << "Primero debe crear un minimo de 2 jugadores\n";
+			return;
+		}
 		preloadTable(table);
 		getCurrentPlayers(playersNames, playersColors, playersPoints, playerAmounts, players);
 		Player firstPlayer, secondPlayer;
