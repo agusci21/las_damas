@@ -29,11 +29,11 @@ void getCurrentPlayers(string playersNames[10], string playersColors[10], int pl
 	system("cls");
 	cout << "Seleccione el Jugador 1: \n";
 	printUsers(playersNames, playersColors, playersPoints, playerAmount);
-	firstPlayer = translateInput();
+	firstPlayer = translateInput() - 1;
 	system("cls");
 	cout << "Seleccione el Jugador 2: \n";
 	printUsers(playersNames, playersColors, playersPoints, playerAmount);
-	secondPlayer = translateInput();
+	secondPlayer = translateInput() - 1;
 	players[0] = firstPlayer;
 	players[1] = secondPlayer;
 }
