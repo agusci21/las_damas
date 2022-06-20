@@ -13,7 +13,7 @@ int determinateMovementAcount(bool isFirstPlayerTurn, int i, int j, int matrix[1
 bool determinateIfBeAbleToMoveRight(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]);
 bool determinateIfBeAbleToMoveLeft(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]);
 int determinatePlayerPoints(int matrix[10][10], bool isFirstPlayerTurn);
-void runGame(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmounts);
+void runGame(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmounts, int players[2]);
 void createUser(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmounts);
 int translateInput();
 void printUsers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount);
@@ -24,9 +24,8 @@ struct Player{
 	string color;	
 };
 
-int getCurrentPlayers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount){
+int getCurrentPlayers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount, int players[2]){
 	int firstPlayer, secondPlayer;
-	int players[2];
 	system("cls");
 	cout << "Seleccione el Jugador 1: \n";
 	printUsers(playersNames, playersColors, playersPoints, playerAmount);
@@ -41,10 +40,11 @@ int getCurrentPlayers(string playersNames[10], string playersColors[10], int pla
 
 int main() {
 	char option = '0';
+	int playersAmount = 0;
 	int playersPoints[20];
 	string playersNames[20];
 	string playersColors[20];
-	int playersAmount = 0;
+	int players[2];
 	cout << "Bienvenido a las Damas" << endl;
 	do{
 	cout << "1 --- Jugar" << endl;
@@ -55,7 +55,7 @@ int main() {
 	cout << endl;
 	switch(option){
 		case '1':
-		 runGame(playersNames, playersColors, playersPoints, playersAmount);
+		 runGame(playersNames, playersColors, playersPoints, playersAmount, players);
 		 break;
 
 		case '2':
@@ -284,20 +284,23 @@ int determinatePlayerPoints(int matrix[10][10], bool isFirstPlayerTurn ){
 }
 
 int translateInput(){
-    int aux = getche();
+    int aux;
+	do{
+	aux = getche();
     cout << endl;
-    if(aux > 57 || aux < 48) cout << "Seleccione un numero por favor\n";
+    if(aux > 57 || aux < 48) cout << "Seleccione un numero por favor\n-----------------------------\n";
+	}while(aux > 57 || aux < 48);
     return aux - 48;
 }
 
-void runGame(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmounts){
+void runGame(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmounts, int players[2]){
 		int table[10][10] = {0};
 		int firstPlayerPoints = 0;
     	int secondPlayerPoints = 0;
 		bool isFirstPlayerTurn = true;
 		bool isWinner = false;
 		preloadTable(table);
-		getCurrentPlayers(playersNames, playersColors, playersPoints, playerAmounts);
+		getCurrentPlayers(playersNames, playersColors, playersPoints, playerAmounts, players);
 		do{
 		printTable(table, isFirstPlayerTurn);
 		moveFiles(table, isFirstPlayerTurn);
@@ -324,7 +327,7 @@ void createUser(string playersNames[10], string playersColors[10], int playersPo
 	char colorChar;
 	int points = 0;
 	system("cls");
-	cout << "Crea tu usuario\n Ingrese su nombre\n";
+	cout << "Crea tu usuario\nIngrese su nombre\n";
 	cin >> name;
 	system("cls");
 	cout << "Ingrese su color de preferencia \n";
@@ -354,6 +357,7 @@ void printUsers(string playersNames[10], string playersColors[10], int playersPo
 		player.name = playersNames[i];
 		player.points = playersPoints[i];
 		player.color = playersColors[i];
+		cout << "Jugador N: " << i+1 << endl;
 		cout << "Nombre: " << player.name << endl;
 		cout << "Puntaje: " <<player.points << endl;
 		cout << "-----------------------\n";
