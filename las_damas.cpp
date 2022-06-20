@@ -23,37 +23,7 @@ void createUser(string playersNames[10], string playersColors[10], int playersPo
 int translateInput();
 void printUsers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount);
 void getCurrentPlayers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount, int players[2]);
-void changeColor(string color){
-	switch(color[7]){
-		case '1':
-			system("COLOR 01");
-			break;
-
-		case '2':
-			system("COLOR 02");
-			break;
-
-		case '3':
-			system("COLOR 03");
-			break;
-
-		case '4':
-			system("COLOR 04");
-			break;
-
-		case '5':
-			system("COLOR 05");
-			break;
-
-		case '6':
-			system("COLOR 06");
-			break;
-
-		case '7':
-			system("COLOR 07");
-			break;
-	}
-}
+void changeColor(string color);
 
 int main() {
 	char option = '0';
@@ -357,6 +327,9 @@ void runGame(string playersNames[10], string playersColors[10], int playersPoint
 			cout << "Felicitaciones " << secondPlayer.name << " has ganado\n";
 			playersPoints[players[1]]++;
 		}
+		changeColor("NULL");
+		system("pause");
+		system("cls");
 }
 
 void createUser(string playersNames[10], string playersColors[10], int playersPoints[10], int playersAmount){
@@ -415,4 +388,37 @@ void getCurrentPlayers(string playersNames[10], string playersColors[10], int pl
 	secondPlayer = translateInput() - 1;
 	players[0] = firstPlayer;
 	players[1] = secondPlayer;
+}
+
+void changeColor(string color){
+
+	switch(color[7]){
+		case '1':
+			system("COLOR 01");
+			break;
+
+		case '2':
+			system("COLOR 02");
+			break;
+
+		case '3':
+			system("COLOR 03");
+			break;
+
+		case '4':
+			system("COLOR 04");
+			break;
+
+		case '5':
+			system("COLOR 05");
+			break;
+
+		case '6':
+			system("COLOR 06");
+			break;
+
+		default:
+			system("COLOR 07");
+			break;
+	}
 }
