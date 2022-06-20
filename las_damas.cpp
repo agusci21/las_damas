@@ -397,16 +397,24 @@ void getCurrentPlayers(string playersNames[10], string playersColors[10], int pl
 		cout << "Seleccione el Jugador 1: \n";
 		printUsers(playersNames, playersColors, playersPoints, playerAmount);
 		firstPlayer = translateInput() - 1;
-		if(firstPlayer > playerAmount || firstPlayer == -1){
+		cout << firstPlayer;
+		if(firstPlayer > playerAmount - 1 || firstPlayer == -1){
 			cout << "Por favor, seleccione una opcion valida\n";
 			system("pause");
 			system("cls");
 		}
-	}while(firstPlayer > playerAmount || firstPlayer == -1);
+	}while(firstPlayer > playerAmount -1 || firstPlayer == -1);
 	system("cls");
-	cout << "Seleccione el Jugador 2: \n";
-	printUsers(playersNames, playersColors, playersPoints, playerAmount);
-	secondPlayer = translateInput() - 1;
+	do{
+		cout << "Seleccione el Jugador 2: \n";
+		printUsers(playersNames, playersColors, playersPoints, playerAmount);
+		secondPlayer = translateInput() - 1;
+		if(secondPlayer > playerAmount -1 || secondPlayer == -1){
+			cout << "Por favor, seleccione una opcion valida\n";
+			system("pause");
+			system("cls");
+		}
+	}while(secondPlayer > playerAmount -1 || secondPlayer == -1);
 	players[0] = firstPlayer;
 	players[1] = secondPlayer;
 }
