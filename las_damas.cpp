@@ -25,6 +25,7 @@ int translateInput();
 void printUsers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount);
 void getCurrentPlayers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount, int players[2]);
 void changeColor(string color);
+void orderPlayers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount);
 
 int main() {
 	char option = '0';
@@ -378,6 +379,7 @@ void createUser(string playersNames[10], string playersColors[10], int playersPo
 
 void printUsers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmounts){
 	Player player;
+	orderPlayers(playersNames, playersColors, playersPoints, playerAmounts);
 	cout << "-----------------------\n";
 	for(int i = 0; i < playerAmounts; i++){
 		player.name = playersNames[i];
@@ -449,5 +451,30 @@ void changeColor(string color){
 		default:
 			system("COLOR 07");
 			break;
+	}
+}
+
+void orderPlayers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount){
+	string auxiliarName, auxiliarColor;
+	int auxiliarPoints;
+	for(int i = 0; i < playerAmount; i++){
+		for(int j = 0; j < playerAmount - 1; j++){
+			if(playersPoints[j] < playersPoints[j + 1]){
+				//Ordenar Puntos
+				auxiliarPoints = playersPoints[j];
+				playersPoints[j] = playersPoints[j + 1];
+				playersPoints[j + 1] = auxiliarPoints;
+
+				//Ordenar nombres 
+				auxiliarName = playersNames[j];
+				playersNames[j] = playersNames[j + 1];
+				playersNames[j + 1] = auxiliarName;
+
+				//Ordenar colores 
+				auxiliarColor = playersColors[j];
+				playersColors[j] = playersColors[j + 1];
+				playersColors[j + 1] = auxiliarColor;
+			}
+		}	
 	}
 }
