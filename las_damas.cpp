@@ -1,4 +1,5 @@
 #include<iostream>
+#include<string>
 #include<conio.h>
 
 using namespace std;
@@ -13,43 +14,73 @@ int determinateMovementAcount(bool isFirstPlayerTurn, int i, int j, int matrix[1
 bool determinateIfBeAbleToMoveRight(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]);
 bool determinateIfBeAbleToMoveLeft(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]);
 int determinatePlayerPoints(int matrix[10][10], bool isFirstPlayerTurn);
+void runGame();
+void createUser(string playersNames[20], string playersColors[20], int playersPoints[20], int playerAmounts);
 int translateInput();
+struct Player{
+	int points = 0;
+	string name;
+	string color;	
+};
+void printUsers(string playersNames[20], string playersColors[20], int playersPoints[20], int playerAmounts){
+	Player player;
+	system("cls");
+	cout << "-----------------------\n";
+	for(int i = 0; i < playerAmounts; i++){
+		player.name = playersNames[i];
+		player.points = playersPoints[i];
+		player.color = playersColors[i];
+		cout << "Nombre: " << player.name << endl;
+		cout << "Puntaje: " <<player.points << endl;
+		cout << "-----------------------\n";
+	}
+	system("pause");
+	system("cls");
+}
 
 int main() {
-	int table[10][10] = {0};
-	int firstPlayerPoints = 0;
-    int secondPlayerPoints = 0;
-	bool isFirstPlayerTurn = true;
-	bool isWinner = false;
-	preloadTable(table);
+	char option = '0';
+	int playersPoints[20];
+	string playersNames[20];
+	string playersColors[20];
+	int playersAmount = 0;
+	cout << "Bienvenido a las Damas" << endl;
 	do{
-	printTable(table, isFirstPlayerTurn);
-	moveFiles(table, isFirstPlayerTurn);
-	if(isFirstPlayerTurn){
-        cout << firstPlayerPoints << endl;
-		firstPlayerPoints += determinatePlayerPoints(table, true);
-		cout << "Jugador 1: " << firstPlayerPoints << endl;
-	}else{
-		secondPlayerPoints += determinatePlayerPoints(table, false);
-		cout << "Jugador 2: " << secondPlayerPoints << endl;
+	cout << "1 --- Jugar" << endl;
+	cout << "2 --- Crear un usuario" << endl;
+	cout << "3 --- Listar partidas ganadas" << endl;
+	cout << "Otra tecla --- Salir" << endl;
+	option = getche();
+	cout << endl;
+	switch(option){
+		case '1':
+		 runGame();
+		 break;
+
+		case '2':
+			createUser(playersNames, playersColors, playersPoints, playersAmount);
+			playersAmount++;
+			cout << "Cantidad de jugadores: " << playersAmount << endl;
+			break;
+		case '3' :
+			printUsers(playersNames, playersColors, playersPoints, playersAmount);
+			break;
+		default:
+			option = '0';
+			break;
 	}
-    if(firstPlayerPoints >= 5||secondPlayerPoints >= 5)isWinner = true;
-	isFirstPlayerTurn = !isFirstPlayerTurn;
-    system("pause");
-	}while(!isWinner);
-    if(firstPlayerPoints >= 5) cout << "Felicitaciones jugador 1, has ganado\n";
-    else cout << "Felicitaciones jugador 2, has ganado\n";
+	}while(option != '0');
 	return 0;
 }
 
 void printTable (int matrix[10][10], bool isFirstPlayerTurn){
 	system("cls");
+	//system("COLOR 0f");
 	isFirstPlayerTurn ? cout << "Turno del Jugador N 1 \n" : cout << "Turno del Jugador N 2\n";
 	cout << 
 	" +-----------------------------------+\n"
 	" | \\ X  0  1  2  3  4  5  6  7  8  9 |\n"
 	" | Y +-------------------------------+\n";
-
 	for(int i = 0; i < 10; i++){
 		for(int j = 0; j <= 10; j++){
 			if( j == 0)
@@ -257,4 +288,59 @@ int translateInput(){
     cout << endl;
     if(aux > 57 || aux < 48) cout << "Seleccione un numero por favor\n";
     return aux - 48;
+}
+void runGame(){
+		int table[10][10] = {0};
+		int firstPlayerPoints = 0;
+    	int secondPlayerPoints = 0;
+		bool isFirstPlayerTurn = true;
+		bool isWinner = false;
+		preloadTable(table);
+		do{
+		printTable(table, isFirstPlayerTurn);
+		moveFiles(table, isFirstPlayerTurn);
+		if(isFirstPlayerTurn){
+    	    cout << firstPlayerPoints << endl;
+			firstPlayerPoints += determinatePlayerPoints(table, true);
+			cout << "Jugador 1: " << firstPlayerPoints << endl;
+		}else{
+			secondPlayerPoints += determinatePlayerPoints(table, false);
+			cout << "Jugador 2: " << secondPlayerPoints << endl;
+		}
+    	if(firstPlayerPoints >= 5||secondPlayerPoints >= 5)isWinner = true;
+		isFirstPlayerTurn = !isFirstPlayerTurn;
+    	system("pause");
+		}while(!isWinner);
+    	if(firstPlayerPoints >= 5) cout << "Felicitaciones jugador 1, has ganado\n";
+    	else cout << "Felicitaciones jugador 2, has ganado\n";
+}
+
+void createUser(string playersNames[20], string playersColors[20], int playersPoints[20], int playersAmount){
+	Player player;
+	string name;
+	string color = "COLOR 0x";
+	char colorChar;
+	int points = 0;
+	system("cls");
+	cout << "Crea tu usuario\n Ingrese su nombre\n";
+	cin >> name;
+	system("cls");
+	cout << "Ingrese su color de preferencia \n";
+	cout << 
+    "1 = Azul\n"
+    "2 = Verde\n"
+    "3 = Aguamarina\n"
+    "4 = Rojo \n"
+    "5 = Purpura\n"
+    "6 = Amarillo\n"
+    "7 = Blanco\n";
+	colorChar = getche();
+	color[7] = colorChar;
+	player.name = name;
+	player.color = color;
+	player.points = 0;
+	playersPoints[playersAmount] = player.points;
+	playersNames[playersAmount] = player.name;
+	playersColors[playersAmount] = player.color;
+	system("cls");
 }
