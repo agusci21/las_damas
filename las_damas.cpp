@@ -1,5 +1,4 @@
 #include<iostream>
-#include<string>
 #include<conio.h>
 
 using namespace std;
@@ -14,28 +13,30 @@ int determinateMovementAcount(bool isFirstPlayerTurn, int i, int j, int matrix[1
 bool determinateIfBeAbleToMoveRight(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]);
 bool determinateIfBeAbleToMoveLeft(bool isFirstPlayerTurn, int i, int j, int matrix[10][10]);
 int determinatePlayerPoints(int matrix[10][10], bool isFirstPlayerTurn);
-void runGame();
-void createUser(string playersNames[20], string playersColors[20], int playersPoints[20], int playerAmounts);
+void runGame(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmounts);
+void createUser(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmounts);
 int translateInput();
+void printUsers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount);
+
 struct Player{
 	int points = 0;
 	string name;
 	string color;	
 };
-void printUsers(string playersNames[20], string playersColors[20], int playersPoints[20], int playerAmounts){
-	Player player;
+
+int getCurrentPlayers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount){
+	int firstPlayer, secondPlayer;
+	int players[2];
 	system("cls");
-	cout << "-----------------------\n";
-	for(int i = 0; i < playerAmounts; i++){
-		player.name = playersNames[i];
-		player.points = playersPoints[i];
-		player.color = playersColors[i];
-		cout << "Nombre: " << player.name << endl;
-		cout << "Puntaje: " <<player.points << endl;
-		cout << "-----------------------\n";
-	}
-	system("pause");
+	cout << "Seleccione el Jugador 1: \n";
+	printUsers(playersNames, playersColors, playersPoints, playerAmount);
+	firstPlayer = translateInput();
 	system("cls");
+	cout << "Seleccione el Jugador 2: \n";
+	printUsers(playersNames, playersColors, playersPoints, playerAmount);
+	secondPlayer = translateInput();
+	players[0] = firstPlayer;
+	players[1] = secondPlayer;
 }
 
 int main() {
@@ -54,7 +55,7 @@ int main() {
 	cout << endl;
 	switch(option){
 		case '1':
-		 runGame();
+		 runGame(playersNames, playersColors, playersPoints, playersAmount);
 		 break;
 
 		case '2':
@@ -75,7 +76,6 @@ int main() {
 
 void printTable (int matrix[10][10], bool isFirstPlayerTurn){
 	system("cls");
-	//system("COLOR 0f");
 	isFirstPlayerTurn ? cout << "Turno del Jugador N 1 \n" : cout << "Turno del Jugador N 2\n";
 	cout << 
 	" +-----------------------------------+\n"
@@ -289,13 +289,15 @@ int translateInput(){
     if(aux > 57 || aux < 48) cout << "Seleccione un numero por favor\n";
     return aux - 48;
 }
-void runGame(){
+
+void runGame(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmounts){
 		int table[10][10] = {0};
 		int firstPlayerPoints = 0;
     	int secondPlayerPoints = 0;
 		bool isFirstPlayerTurn = true;
 		bool isWinner = false;
 		preloadTable(table);
+		getCurrentPlayers(playersNames, playersColors, playersPoints, playerAmounts);
 		do{
 		printTable(table, isFirstPlayerTurn);
 		moveFiles(table, isFirstPlayerTurn);
@@ -315,7 +317,7 @@ void runGame(){
     	else cout << "Felicitaciones jugador 2, has ganado\n";
 }
 
-void createUser(string playersNames[20], string playersColors[20], int playersPoints[20], int playersAmount){
+void createUser(string playersNames[10], string playersColors[10], int playersPoints[10], int playersAmount){
 	Player player;
 	string name;
 	string color = "COLOR 0x";
@@ -343,4 +345,17 @@ void createUser(string playersNames[20], string playersColors[20], int playersPo
 	playersNames[playersAmount] = player.name;
 	playersColors[playersAmount] = player.color;
 	system("cls");
+}
+
+void printUsers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmounts){
+	Player player;
+	cout << "-----------------------\n";
+	for(int i = 0; i < playerAmounts; i++){
+		player.name = playersNames[i];
+		player.points = playersPoints[i];
+		player.color = playersColors[i];
+		cout << "Nombre: " << player.name << endl;
+		cout << "Puntaje: " <<player.points << endl;
+		cout << "-----------------------\n";
+	}
 }
