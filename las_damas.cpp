@@ -338,7 +338,6 @@ void runGame(string playersNames[10], string playersColors[10], int playersPoint
 }
 
 void createUser(string playersNames[10], string playersColors[10], int playersPoints[10], int playersAmount){
-	//char validSelections[7] = {'1', '2', '3', '4', '5', '6', '7'};
 	string validSelections = "1234567";
 	Player player;
 	string name;
@@ -394,9 +393,16 @@ void printUsers(string playersNames[10], string playersColors[10], int playersPo
 void getCurrentPlayers(string playersNames[10], string playersColors[10], int playersPoints[10], int playerAmount, int players[2]){
 	int firstPlayer, secondPlayer;
 	system("cls");
-	cout << "Seleccione el Jugador 1: \n";
-	printUsers(playersNames, playersColors, playersPoints, playerAmount);
-	firstPlayer = translateInput() - 1;
+	do{
+		cout << "Seleccione el Jugador 1: \n";
+		printUsers(playersNames, playersColors, playersPoints, playerAmount);
+		firstPlayer = translateInput() - 1;
+		if(firstPlayer > playerAmount || firstPlayer == -1){
+			cout << "Por favor, seleccione una opcion valida\n";
+			system("pause");
+			system("cls");
+		}
+	}while(firstPlayer > playerAmount || firstPlayer == -1);
 	system("cls");
 	cout << "Seleccione el Jugador 2: \n";
 	printUsers(playersNames, playersColors, playersPoints, playerAmount);
